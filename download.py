@@ -24,9 +24,8 @@ image_dir = "Desktops"
 os.system("mkdir -p {}".format(image_dir))
 
 if os.path.exists("last_downloaded"):
-    f = open("last_downloaded", "r+")
-    last_downloaded = f.read().strip()
-    f.close()
+    with open("last_downloaded", "r+") as f:
+        last_downloaded = f.read().strip()
 else:
     last_downloaded = ""
 
@@ -39,7 +38,7 @@ while not finished:
     images = re.findall(r"(http://static\.simpledesktops\.com/uploads/desktops/[0-9]{4}/[0-9]{2}/[0-9]{2}/[^\"]*)\" title=\"([^\"]*)\"", browse_page)
     if len(images):
         for url, name in images:
-            url = ".".join(url.split(".")[:-2]) # remove dimensions
+            url = ".".join(url.split(".")[:-2])  # Remove thumbnail dimensions
             if url == last_downloaded:
                 finished = True
                 break
@@ -64,8 +63,7 @@ while not finished:
         finished = True
 
 if new_last_downloaded != "":
-    f = open("last_downloaded", "w")
-    f.write(new_last_downloaded)
-    f.close()
+    with open("last_downloaded", "w") as f:
+        f.write(new_last_downloaded)
 
 print("All desktops downloaded")
