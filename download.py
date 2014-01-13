@@ -5,6 +5,7 @@ import os
 import re
 import requests
 
+
 h = html.parser.HTMLParser()
 
 def clean_filename(filename):
@@ -66,4 +67,5 @@ if new_last_downloaded != "":
     f = open("last_downloaded", "w")
     f.write(new_last_downloaded)
     f.close()
+
 print("All desktops downloaded")
