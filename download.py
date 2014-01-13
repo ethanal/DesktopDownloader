@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3
+#!/usr/bin/env python3
 
 import html.parser
 import os
@@ -19,12 +19,13 @@ def add_suffix(n, filename):
     extension = filename.split(".")[-1]
     return name + " " + str(suffix) + "." + extension
 
-image_dir = "Desktops"
-
+base_dir = os.path.dirname(os.path.realpath(__file__))
+image_dir = os.path.join(base_dir, "Desktops")
+last_downloaded_path = os.path.join(base_dir, "last_downloaded")
 os.system("mkdir -p {}".format(image_dir))
 
-if os.path.exists("last_downloaded"):
-    with open("last_downloaded", "r+") as f:
+if os.path.exists(last_downloaded_path):
+    with open(last_downloaded_path, "r+") as f:
         last_downloaded = f.read().strip()
 else:
     last_downloaded = ""
@@ -63,7 +64,7 @@ while not finished:
         finished = True
 
 if new_last_downloaded != "":
-    with open("last_downloaded", "w") as f:
+    with open(last_downloaded_path, "w") as f:
         f.write(new_last_downloaded)
 
 print("All desktops downloaded")
