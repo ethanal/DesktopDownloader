@@ -5,11 +5,16 @@ import os
 import re
 import requests
 
-
 h = html.parser.HTMLParser()
 
+
+def escape_spaces(str):
+    return str.replace("/", "-")
+
+
 def clean_filename(filename):
-    return h.unescape(filename).replace("/", "-")
+    return escape_spaces(h.unescape(filename))
+
 
 def add_suffix(n, filename):
     if suffix == 0:
@@ -19,10 +24,11 @@ def add_suffix(n, filename):
     extension = filename.split(".")[-1]
     return name + " " + str(suffix) + "." + extension
 
+
 base_dir = os.path.dirname(os.path.realpath(__file__))
 image_dir = os.path.join(base_dir, "Desktops")
 last_downloaded_path = os.path.join(base_dir, "last_downloaded")
-os.system("mkdir -p {}".format(image_dir))
+os.system("mkdir -p '{}'".format(image_dir))
 
 if os.path.exists(last_downloaded_path):
     with open(last_downloaded_path, "r+") as f:
